@@ -1,0 +1,74 @@
+<div class="p-grid">
+  <div class="ui-g">
+    <div class="ui-g-10">
+      <h3 class="first">Liste et montant des supports</h3>
+    </div>
+    <div class="ui-g-1">
+      <button icon="pi pi-save" iconPos="left" pButton type="button" label="Sauvegarder" class="ui-button-success"
+              (click)="sendModifications()" [disabled]="!wholeSavingsAreValid() || !modificationHasBeendMade()">
+      </button>
+    </div>
+    <div class="ui-g-1">
+      <button icon="pi pi-ban" iconPos="left" pButton type="button" label="Annuler" class="ui-button-info"
+              (click)="abortAllModifications()" [disabled]="!modificationHasBeendMade()">
+      </button>
+
+    </div>
+  </div>
+</div>
+<p-table [value]="savingsWorkingCopy">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Support</th>
+      <th>Montant (€)</th>
+      <th>Répartition (%)</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-saving let-index="rowIndex">
+    <tr *ngIf="!saving.editInProgress">
+      <td>{{saving.name}}</td>
+      <td>{{saving.amount | money}}</td>
+      <td>{{saving.repartition | percentage}}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" class="ui-button-warning"
+                (click)="saving.editInProgress=true"></button>
+      </td>
+    </tr>
+    <tr *ngIf="saving.editInProgress">
+      <td>
+        <input [required]="true" type="text" [(ngModel)]="saving.name" pInputText placeholder=""
+               style="width: 100%; height: 100%">
+      </td>
+      <td>
+        <input type="number" [(ngModel)]="saving.amount" pInputText placeholder=""
+               style="width: 100%; height: 100%">
+      </td>
+      <td>
+        <input type="number" [(ngModel)]="saving.repartition" pInputText placeholder=""
+               style="width: 100%; height: 100%">
+      </td>
+      <td>
+        <button *ngIf="index==savingsWorkingCopy.length-1" pButton type="button" icon="pi pi-plus"
+                class="ui-button-success" (click)="handleAddingSaving(index)"
+                [disabled]="!savingIsValid(saving) || !nameIsValid(index)">
+
+        </button>
+        <button *ngIf="index!=savingsWorkingCopy.length-1" pButton type="button" icon="pi pi-check"
+                class="ui-button-success" (click)="handleUpdateSaving(index)"
+                [disabled]="!savingIsValid(saving) || !changeHasBeenMadeOnCurrentSaving(index) || !nameIsValid(index)">
+
+        </button>
+        <button *ngIf="index!=savingsWorkingCopy.length-1" pButton type="button" icon="pi pi-ban"
+                class="ui-button-info" (click)="handleRevert(index)">
+        </button>
+        <button *ngIf="index!=savingsWorkingCopy.length-1" (click)="handleRemoving(index) " pButton type="button"
+                icon="pi pi-trash"
+                class="ui-button-danger">
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<app-payment-history></app-payment-history>

@@ -1,0 +1,22 @@
+<h3 class="first">Montant à ajouter</h3>
+<div class="p-grid">
+  <div class="ui-g">
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon">€</span>
+      <input type="number" pInputText placeholder="Montant"
+             (change)="amountchange(incomeAmmount)"
+             [(ngModel)]="incomeAmmount">
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-6">
+    </div>
+  </div>
+</div>
+
+
+<app-situation [title]="'Repartition de l\'ajout'" [savings]="repartitionSavings"
+               [computedSituation]="addingSavingsRepartition"></app-situation>
+<app-situation [title]="'Situation après ajout'" [savings]="resultSavings"
+               [computedSituation]="resultSavingsRepartition"></app-situation>
+

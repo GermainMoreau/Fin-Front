@@ -1,0 +1,29 @@
+<app-situation [title]="'situation actuelle'" [savings]="savings"
+               [computedSituation]="savingsRepartions"></app-situation>
+
+<p-panel header="Indicateurs" [toggleable]="true" [collapsed]="false">
+  <div class="p-grid">
+    <div class="ui-g">
+      <div class="ui-g-3">
+        <p-table [value]="indicators">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nom</th>
+              <th>Valeur</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-indicator>
+            <tr>
+              <td>{{indicator.name }}</td>
+              <td>{{indicator.value }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="ui-g-9">
+        <p-chart type="line" [data]="history" [width]="'100%'" [height]="'300px'" [responsive]="true"></p-chart>
+      </div>
+    </div>
+  </div>
+</p-panel>
+

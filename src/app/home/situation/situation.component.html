@@ -1,0 +1,27 @@
+<p-panel header="{{title}}" [toggleable]="!!savings" [collapsed]="!savings">
+  <div class="p-grid" *ngIf="!!savings">
+    <div class="ui-g">
+      <div class="ui-g-6">
+        <p-table [value]="savings">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Support</th>
+              <th>Montant (€)</th>
+              <th>Repartition (%)</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-saving let-index="rowIndex">
+            <tr>
+              <td>{{saving.name }}</td>
+              <td>{{saving.amount | money }}</td>
+              <td>{{computedSituation[index] | percentage}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="ui-g-6">
+        <p-chart type="pie" [data]="data" [responsive]="true" [height]="'100%'"></p-chart>
+      </div>
+    </div>
+  </div>
+</p-panel>
